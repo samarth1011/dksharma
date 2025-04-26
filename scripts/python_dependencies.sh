@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-PROJECT_MAIN_DIR_NAME="CS"
+PROJECT_MAIN_DIR_NAME="dksharma"
 
 # Validate variables
 if [ -z "$PROJECT_MAIN_DIR_NAME" ]; then

@@ -2,8 +2,8 @@
 
 set -e
 
-PROJECT_MAIN_DIR_NAME="CS"
-FOLDER_NAME_WHERE_SETTINGS_FILE_EXISTS="cs_portal"
+PROJECT_MAIN_DIR_NAME="dksharma"
+FOLDER_NAME_WHERE_SETTINGS_FILE_EXISTS="dksharma"
 
 # Reload systemd daemon
 sudo systemctl daemon-reload
