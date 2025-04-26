@@ -1,5 +1,6 @@
 [Unit]
-Description=gunicorn daemon for dksharma
+Description=gunicorn daemon
+Requires=gunicorn_dksharma.socket
 After=network.target
 
 [Service]
