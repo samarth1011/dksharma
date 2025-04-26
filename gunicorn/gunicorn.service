@@ -1,16 +1,16 @@
 [Unit]
-Description=gunicorn daemon
-Requires=gunicorn.socket
+Description=gunicorn daemon for dksharma
 After=network.target
 
 [Service]
 User=ec2-user
 Group=nginx
-WorkingDirectory=/home/ec2-user/CS
-ExecStart=/home/ec2-user/CS/venv/bin/gunicorn \
+WorkingDirectory=/home/ec2-user/dksharma
+ExecStart=/home/ec2-user/dksharma/venv/bin/gunicorn \
           --access-logfile - \
           --workers 3 \
-          --bind unix:/run/gunicorn.sock \
-          cs_portal.wsgi:application
+          --bind unix:/run/gunicorn_dksharma.sock \
+          dksharma.wsgi:application
+
 [Install]
 WantedBy=multi-user.target

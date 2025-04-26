@@ -1,6 +1,8 @@
 [Unit]
-Description=gunicorn socket
+Description=gunicorn socket for dksharma
+
 [Socket]
-ListenStream=/run/gunicorn.sock
+ListenStream=/run/gunicorn_dksharma.sock
+
 [Install]
 WantedBy=sockets.target
