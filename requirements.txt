@@ -1,0 +1,7 @@
+asgiref==3.8.1
+Django
+django-ckeditor
+django-js-asset
+pillow
+sqlparse
+tzdata
