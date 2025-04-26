@@ -2,13 +2,13 @@
 set -e
 
 # Replace {YOUR_GIT_REOPO_URL} with your actual Git repository URL
-GIT_REPO_URL="https://github.com/samarth1011/cs_portal.git"
+GIT_REPO_URL="https://github.com/samarth1011/dksharma.git"
 
 # If using Private Repo
 #GIT_REPO_URL="https://<your_username>:<your_PAT>@github.com/codewithmuh/django-aws-ec2-autoscaling.git"
 
 # Replace {YOUR_PROJECT_MAIN_DIR_NAME} with your actual project directory name
-PROJECT_MAIN_DIR_NAME="CS"
+PROJECT_MAIN_DIR_NAME="dksharma"
 
 # Clone repository
 git clone "$GIT_REPO_URL" "/home/ec2-user/$PROJECT_MAIN_DIR_NAME"
