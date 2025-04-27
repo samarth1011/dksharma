@@ -43,6 +43,9 @@ def blog_detail(request, slug):
     post = get_object_or_404(BlogPost, slug=slug)
     return render(request, 'app/blog-details.html', {'post': post})
 
+def investment_fundraising(request):
+    return render(request, 'app/investment_fundraising.html')
+
 def contact_view(request):
     if request.method == "POST":
         name = request.POST.get("name")

@@ -13,6 +13,7 @@ urlpatterns = [
      path('services/secreterial_audits', views.secreterial_audits, name='secreterial_audits'),
      path('services/rbi_fema_compliance', views.rbi_fema_compliance, name='rbi_fema_compliance'),
      path('services/corporate_advisory', views.corporate_advisory, name='corporate_advisory'),
+      path('services/investment_fundraising', views.investment_fundraising, name='investment_fundraising'),
      
      path('services/other_services', views.other_services, name='other_services'),
      path('services/sexual_harasment', views.sexual_harasment, name='sexual_harasment'),
