@@ -1,5 +1,6 @@
 [Unit]
 Description=gunicorn daemon
+Requires=gunicorn_dksharma.socket
 After=network.target
 
 [Service]
@@ -9,7 +10,7 @@ WorkingDirectory=/home/ec2-user/dksharma
 ExecStart=/home/ec2-user/dksharma/venv/bin/gunicorn \
           --access-logfile - \
           --workers 3 \
-          --bind 127.0.0.1:8001 \
+          --bind unix:/run/gunicorn_dksharma.sock \
           dksharma.wsgi:application
 
 [Install]
