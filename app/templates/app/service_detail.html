@@ -60,18 +60,40 @@
           <li class="dropdown">
             <a href="#"><span>Client Services</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
-              <li><a href="{% url 'company_incorporation' %}">Company Incorporation</a></li>
-              <li><a href="{% url 'secretarial_compliance' %}">Secretarial Compliance</a></li>
-              <li><a href="{% url 'statutory_certification' %}">Statutory Certification</a></li>
-              <li><a href="{% url 'compliance_secretaries' %}">Compliance Secretaries</a></li>
-              <li><a href="{% url 'bank_services' %}">Bank Services</a></li>
-              <li><a href="{% url 'secreterial_audits' %}">Secretarial Audits</a></li>
-              <li><a href="{% url 'rbi_fema_compliance' %}">RBI FEMA Compliance</a></li>
-              <li><a href="{% url 'corporate_advisory' %}">Corporate Advisory</a></li>
-              <li><a href="{% url 'other_services' %}">Other Services</a></li>
+              {% for category in service_categories %}
+                <li class="dropdown">
+                  <a href="#"><span>{{ category.name }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                  <ul>
+                    {% for child in category.children.all %}
+                      {% if child.children.exists %}
+                        <li class="dropdown">
+                          <a href="#"><span>{{ child.name }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                          <ul>
+                            {% for grandchild in child.children.all %}
+                              <li><a href="#">{{ grandchild.name }}</a></li>
+                            {% endfor %}
+                            {% for service in child.services.all %}
+                              <li><a href="{% url 'service_detail' service.slug %}">{{ service.title }}</a></li>
+                            {% endfor %}
+                          </ul>
+                        </li>
+                      {% else %}
+                        <li class="dropdown">
+                          <a href="#"><span>{{ child.name }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                          <ul>
+                            {% for service in child.services.all %}
+                              <li><a href="{% url 'service_detail' service.slug %}">{{ service.title }}</a></li>
+                            {% endfor %}
+                          </ul>
+                        </li>
+                      {% endif %}
+                    {% endfor %}
+                  </ul>
+                </li>
+              {% endfor %}
             </ul>
           </li>
-    
+          
     
             <li><a href="/#contact">Contact Us</a></li>
           </ul>
@@ -83,82 +105,47 @@
       </div>
       </header>
 
-  <main class="main">
-
-<!-- Page Title -->
-<div class="page-title">
-   
-    <nav class="breadcrumbs">
-      <div class="container">
-        <ol>
-          <li><a href="index.html">Home</a></li>
-          <li class="current">Company Law and Secretarial 
-            Compliances</li>
-        </ol>
-      </div>
-    </nav>
-  </div><!-- End Page Title -->
-  
-    <!-- Service Details Section -->
-    <section id="service-details" class="service-details section">
-
-      <div class="container">
-
-        <div class="row gy-5">
-
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
-
-            <div class="service-box">
-                <h4>Services List</h4>
-                <div class="services-list">
-                  <a href="{% url 'company_incorporation' %}"><i class="bi bi-arrow-right-circle"></i><span>Company Incorporation</span></a>
-                  <a href="{% url 'secretarial_compliance' %}"><i class="bi bi-arrow-right-circle"></i><span>Company Law and Secretarial Compliances</span></a>
-                  <a href="{% url 'statutory_certification' %}"><i class="bi bi-arrow-right-circle"></i><span>Statutory Certification</span></a>
-                  <a href="{% url 'compliance_secretaries' %}"><i class="bi bi-arrow-right-circle"></i><span>Compliance with Securities Laws</span></a>
-                  <a href="{% url 'bank_services' %}"><i class="bi bi-arrow-right-circle"></i><span>Services to Banks</span></a>
-                  <a href="{% url 'secreterial_audits' %}"><i class="bi bi-arrow-right-circle"></i><span>Secretarial Audits</span></a>
-                  <a href="{% url 'rbi_fema_compliance' %}"><i class="bi bi-arrow-right-circle"></i><span>RBI and FEMA Compliance</span></a>
-                  <a href="{% url 'corporate_advisory' %}"><i class="bi bi-arrow-right-circle"></i><span>Corporate Advisory</span></a>
-                  <a href="{% url 'other_services' %}"><i class="bi bi-arrow-right-circle"></i><span>Other Services</span></a>
-                </div>
-              </div><!-- End Services List -->
-
-             
-              
-
-              <div class="help-box d-flex flex-column justify-content-center align-items-center">
-                <i class="bi bi-headset help-icon"></i>
-                <h4>Have a Question?</h4>
-                <p class="d-flex align-items-center mt-2 mb-0"><i class="bi bi-telephone me-2"></i> <span>+91 94609 91805</span></p>
-                <p class="d-flex align-items-center mt-1 mb-0"><i class="bi bi-envelope me-2"></i> <a href="mailto:info@dksharma.com">info@dksharma.com
-                </a></p>
-              </div>
-
-          </div>
-          <div class="col-lg-8 ps-lg-5" data-aos="fade-up" data-aos-delay="200">
-            <img src="{% static 'assets/img/corporate-advisory.jpg' %}" alt="Corporate Advisory" class="img-fluid services-img">
-            <h3>Corporate Advisory</h3>
-            <p>
-              Our corporate advisory services are aimed at helping clients navigate the legal, regulatory, and strategic landscape of doing business in India effectively and efficiently.
-            </p>
-            <ul>
-              <li><i class="bi bi-check-circle"></i> <span>Advising on legal and regulatory aspects of business in India.</span></li>
-              <li><i class="bi bi-check-circle"></i> <span>Structuring investments to support smooth business operations.</span></li>
-              <li><i class="bi bi-check-circle"></i> <span>Enhancing corporate governance and operational transparency.</span></li>
-              <li><i class="bi bi-check-circle"></i> <span>Drafting and reviewing transactional documents and strategic agreements.</span></li>
-            </ul>
-            <p>
-              From joint ventures to shareholder agreements, our expert team supports your organization’s growth while ensuring full legal compliance and strategic alignment.
-            </p>
-          </div>
-          
+      <main class="main">
+        <div class="page-title">
+          <nav class="breadcrumbs">
+            <div class="container">
+              <ol>
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li class="current">{{ service.title }}</li>
+              </ol>
+            </div>
+          </nav>
         </div>
-
-      </div>
-
-    </section><!-- /Service Details Section -->
-
-  </main>
+      
+        <section id="service-details" class="service-details section">
+          <div class="container">
+            <div class="row gy-5">
+              <div class="col-lg-4">
+                <div class="service-box">
+                  <h4>Services List</h4>
+                  <div class="services-list">
+                    {% for s in service.category.services.all %}
+                      <a href="{% url 'service_detail' s.slug %}">
+                        <i class="bi bi-arrow-right-circle"></i> <span>{{ s.title }}</span>
+                      </a>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+      
+              <div class="col-lg-8 ps-lg-5">
+                {% if service.image %}
+                  <img src="{{ service.image.url }}" alt="{{ service.title }}" class="img-fluid services-img mb-4">
+                {% endif %}
+                <h3>{{ service.title }}</h3>
+                <div>
+                  {{ service.content|safe }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
 
   <footer id="footer" class="footer">
 
@@ -197,8 +184,8 @@
           <div class="col-lg-2 col-md-3 footer-links">
             <h4>Useful Links</h4>
             <ul>
+            
              
-              
               <li> <a href="/#hero">Home</a></li>
               <li> <a href="/#about">About Us</a></li>
               <li> <a href="/#services">Our Services</a></li>

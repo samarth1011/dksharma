@@ -17,8 +17,13 @@ urlpatterns = [
      
      path('services/other_services', views.other_services, name='other_services'),
      path('services/sexual_harasment', views.sexual_harasment, name='sexual_harasment'),
+     
+     path('services/<slug:slug>/', views.service_detail, name='service_detail'),
+
      path('blog/<slug:slug>/', views.blog_detail, name='blog_detail'),
      path("contact", views.contact_view, name="contact"),
+     path("subscribe/", views.subscribe_newsletter, name="subscribe_newsletter"),
+
 
 ]
 
