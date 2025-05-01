@@ -35,6 +35,47 @@
   * Author: Green Reach Solutions.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+
+  
+<style>
+    .whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25D366;
+    color: white;
+    border-radius: 50%;
+    padding: 15px;
+    font-size: 24px;
+    z-index: 1000;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    transition: transform 0.3s;
+  }
+  
+  .whatsapp-float:hover {
+    transform: scale(1.1);
+    text-decoration: none;
+    color: white;
+  }
+  
+  .navbar ul ul {
+    left: 100%;
+    top: 0;
+    visibility: hidden;
+    position: absolute;
+    z-index: 1000;
+  }
+  
+  .navbar li:hover > ul {
+    visibility: visible;
+  }
+  
+  .navbar li {
+    position: relative;
+  }
+  </style>
+  
 </head>
 
 <body class="service-details-page">
@@ -105,7 +146,7 @@
       </div>
       </header>
   <!-- Scroll Top -->
-  <a href="https://wa.me/919460991805" target="_blank"  class=" whatsapp-float scroll-top d-flex align-items-center justify-content-center">
+  <a href="https://wa.me/919460991805" class="whatsapp-float" target="_blank">
     <i class="bi bi-whatsapp"></i>
   </a>
       <main class="main">
