@@ -67,6 +67,34 @@
 .navbar li {
   position: relative;
 }
+
+/* Basic structure for horizontal menu with dropdowns */
+.navmenu > ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navmenu li {
+  position: relative;
+}
+
+.navmenu li ul {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+}
+
+.navmenu li:hover > ul {
+  display: block;
+}
+
+.navmenu li ul li ul {
+  left: 100%;
+  top: 0;
+}
 </style>
 
 <body class="index-page">
@@ -75,58 +103,58 @@
       
           <a href="{% url 'home' %}" class="logo d-flex align-items-center me-auto">
             <img src="{% static 'assets/img/rahul_umberlar_logo.jpg' %}" alt="D.K. Sharma & CO. Logo">
-            <h3 class="sitename" style="font-weight: bold;">D.K. Sharma & CO.</h3>
+            <h4 class="sitename" style="font-weight: bold;">D.K. Sharma & CO.</h4>
           </a>
       
           <nav id="navmenu" class="navmenu">
             <ul>
-              <li><a href="#hero" class="active">Home<br></a></li>
-              <li><a href="#about">About Us</a></li>
-              <li><a href="#services">Services</a></li>
-
-            <li class="dropdown">
-              <a href="#"><span>Client Services</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-              <ul>
-                {% for category in service_categories %}
-                  <li class="dropdown">
-                    <a href="#"><span>{{ category.name }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+              <!-- <li><a href="/">Home</a></li> -->
+              <!-- <li><a href="/about/">About Us</a></li> -->
+            
+              {% for category in service_categories %}
+  {% if not category.parent %}
+    <li class="dropdown">
+      <a href="#"><span>{{ category.name }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+      <ul>
+        {% for child in category.children.all %}
+          <li class="dropdown">
+            <a href="#"><span>{{ child.name }}</span> <i class="bi bi-chevron-right toggle-dropdown"></i></a>
+            <ul>
+              {% for grandchild in child.children.all %}
+                <li class="dropdown">
+                  <a href="#"><span>{{ grandchild.name }}</span></a>
+                  {% if grandchild.services.all %}
                     <ul>
-                      {% for child in category.children.all %}
-                        {% if child.children.exists %}
-                          <li class="dropdown">
-                            <a href="#"><span>{{ child.name }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                            <ul>
-                              {% for grandchild in child.children.all %}
-                                <li><a href="#">{{ grandchild.name }}</a></li>
-                              {% endfor %}
-                              {% for service in child.services.all %}
-                                <li><a href="{% url 'service_detail' service.slug %}">{{ service.title }}</a></li>
-                              {% endfor %}
-                            </ul>
-                          </li>
-                        {% else %}
-                          <li class="dropdown">
-                            <a href="#"><span>{{ child.name }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                            <ul>
-                              {% for service in child.services.all %}
-                                <li><a href="{% url 'service_detail' service.slug %}">{{ service.title }}</a></li>
-                              {% endfor %}
-                            </ul>
-                          </li>
-                        {% endif %}
+                      {% for service in grandchild.services.all %}
+                        <li><a href="{% url 'service_detail' service.slug %}">{{ service.title }}</a></li>
                       {% endfor %}
                     </ul>
-                  </li>
-                {% endfor %}
-              </ul>
-            </li>
-
-              <li><a href="#contact">Contact Us</a></li>
+                  {% endif %}
+                </li>
+              {% endfor %}
+              
+              {% for service in child.services.all %}
+                <li><a href="{% url 'service_detail' service.slug %}">{{ service.title }}</a></li>
+              {% endfor %}
             </ul>
+          </li>
+        {% endfor %}
+        
+        {% for service in category.services.all %}
+          <li><a href="{% url 'service_detail' service.slug %}">{{ service.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+  {% endif %}
+{% endfor %}
+            
+              <!-- <li><a href="/contact/">Contact</a></li> -->
+            </ul>
+            
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
           </nav>
       
-          <a class="btn-getstarted flex-md-shrink-0 d-none d-md-inline-block" href="#contact">Get Started</a>      
+          <!-- <a class="btn-getstarted flex-md-shrink-0 d-none d-md-inline-block" href="#contact">Get Started</a>       -->
         </div>
       </header>
   <main class="main">

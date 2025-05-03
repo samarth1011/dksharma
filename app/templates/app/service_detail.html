@@ -84,62 +84,57 @@
       
         <a href="{% url 'home' %}" class="logo d-flex align-items-center me-auto">
           <img src="{% static 'assets/img/rahul_umberlar_logo.jpg' %}" alt="D.K. Sharma & CO. Logo">
-          <h3 class="sitename" style="font-weight: bold;">D.K. Sharma & CO.</h3>
+          <h4 class="sitename" style="font-weight: bold;">D.K. Sharma & CO.</h4>
         </a>
     
         <nav id="navmenu" class="navmenu">
           <ul>
-            <li><a href="/#hero" class="active">Home<br></a></li>
-            <li><a href="/#about">About Us</a></li>
-            <li><a href="/#services">Services</a></li>
-            <!-- <li><a href="/#portfolio">Portfolio</a></li> -->
-            <!-- <li><a href="/#team">Our Team</a></li> -->
-            <!-- <li>
-              <a href="">Insights & Blog</a>
-          </li> -->
-    
-          <li class="dropdown">
-            <a href="#"><span>Client Services</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-            <ul>
-              {% for category in service_categories %}
-                <li class="dropdown">
-                  <a href="#"><span>{{ category.name }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <!-- <li><a href="/">Home</a></li> -->
+            <!-- <li><a href="/about/">About Us</a></li> -->
+          
+            {% for category in service_categories %}
+{% if not category.parent %}
+  <li class="dropdown">
+    <a href="#"><span>{{ category.name }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+    <ul>
+      {% for child in category.children.all %}
+        <li class="dropdown">
+          <a href="#"><span>{{ child.name }}</span> <i class="bi bi-chevron-right toggle-dropdown"></i></a>
+          <ul>
+            {% for grandchild in child.children.all %}
+              <li class="dropdown">
+                <a href="#"><span>{{ grandchild.name }}</span></a>
+                {% if grandchild.services.all %}
                   <ul>
-                    {% for child in category.children.all %}
-                      {% if child.children.exists %}
-                        <li class="dropdown">
-                          <a href="#"><span>{{ child.name }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                          <ul>
-                            {% for grandchild in child.children.all %}
-                              <li><a href="#">{{ grandchild.name }}</a></li>
-                            {% endfor %}
-                            {% for service in child.services.all %}
-                              <li><a href="{% url 'service_detail' service.slug %}">{{ service.title }}</a></li>
-                            {% endfor %}
-                          </ul>
-                        </li>
-                      {% else %}
-                        <li class="dropdown">
-                          <a href="#"><span>{{ child.name }}</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                          <ul>
-                            {% for service in child.services.all %}
-                              <li><a href="{% url 'service_detail' service.slug %}">{{ service.title }}</a></li>
-                            {% endfor %}
-                          </ul>
-                        </li>
-                      {% endif %}
+                    {% for service in grandchild.services.all %}
+                      <li><a href="{% url 'service_detail' service.slug %}">{{ service.title }}</a></li>
                     {% endfor %}
                   </ul>
-                </li>
-              {% endfor %}
-            </ul>
-          </li>
-          
-    
-            <li><a href="/#contact">Contact Us</a></li>
+                {% endif %}
+              </li>
+            {% endfor %}
+            
+            {% for service in child.services.all %}
+              <li><a href="{% url 'service_detail' service.slug %}">{{ service.title }}</a></li>
+            {% endfor %}
           </ul>
+        </li>
+      {% endfor %}
+      
+      {% for service in category.services.all %}
+        <li><a href="{% url 'service_detail' service.slug %}">{{ service.title }}</a></li>
+      {% endfor %}
+    </ul>
+  </li>
+{% endif %}
+{% endfor %}
+          
+            <!-- <li><a href="/contact/">Contact</a></li> -->
+          </ul>
+          
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
+    
     
         <!-- <a class="btn-getstarted flex-md-shrink-0" href="/#services">Get Started</a> -->
     
@@ -165,7 +160,7 @@
           <div class="container">
             <div class="row gy-5">
               <div class="col-lg-4">
-                <!-- <div class="service-box">
+                <div class="service-box">
                   <h4>Services List</h4>
                   <div class="services-list">
                     {% for s in service.category.services.all %}
@@ -174,7 +169,7 @@
                       </a>
                     {% endfor %}
                   </div>
-                </div> -->
+                </div>
               </div>
       
               <div class="col-lg-8 ps-lg-5">
